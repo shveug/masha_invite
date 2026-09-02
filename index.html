@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Приглашение</title>
     <style>
-        /* ===== ВСЕ СТИЛИ (БЕЗ ИЗМЕНЕНИЙ) ===== */
+        /* ===== ВСЕ СТИЛИ ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { min-height: 100vh; overflow-x: hidden; }
 
@@ -226,7 +226,6 @@
         .hidden-btn.danger { color: #c0392b; opacity: 0.7; }
         .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, #dccfc8, transparent); margin: 8px 0; }
 
-        /* Дополнительный стиль для длинного текста на странице с сюрпризом */
         .text-left {
             text-align: left;
             font-size: 16px;
@@ -271,14 +270,14 @@
 
 <div class="card" id="app">
 
-        <!-- ===== ОБЪЕДИНЁННАЯ СТРАНИЦА 0: Привет + тёплые слова ===== -->
+    <!-- ===== ОБЪЕДИНЁННАЯ СТРАНИЦА 0: Привет + тёплые слова ===== -->
     <div class="screen active" id="screen0">
         <div class="emoji-big">👋</div>
         <h1>Маша, привет, не игнорируй,<br>пожалуйста)</h1>
         <div style="font-size: 18px; line-height: 1.6; color: #3d3530; padding: 0 4px; margin-top: 4px;">
             Мне показалось, что мы круто с тобой покатались, пообщались. Ты классная девушка и мне было очень вайбово)
         </div>
-        <button class="btn btn-primary btn-large" onclick="goToScreen1()" style="margin-top: 10px;">
+        <button class="btn btn-primary btn-large" onclick="goToScreen2()" style="margin-top: 10px;">
             Окей
         </button>
     </div>
@@ -290,8 +289,23 @@
             Маша, если вдруг сюрприз в виде карикатуры как то напряг или даже напугал (надеюсь до этого не дошло) и ты подумала, что я конченый фрик, то поясню.<br><br>
             План был прост — вызвать эмоцию: удивление, смех, неожиданность (ведь как будто такой презент - это небанально)
         </div>
-        <button class="btn btn-primary btn-large" onclick="goToScreen3()" style="margin-top: 10px;">
-            Далее
+        <div style="font-size: 17px; line-height: 1.5; color: #2d2a24; padding: 0 4px; margin-top: 8px; font-weight: 600;">
+            Предлагаю попробовать продолжить общение, только не игнорь.<br>
+            Если всё же не хочешь, то напиши мне об этом...<br>
+            получить конечный ответ приятнее, чем эта неопределённость...
+        </div>
+        <div class="btn-group" style="margin-top: 15px;">
+            <button class="btn btn-outline" onclick="goToScreen5()">Нет</button>
+            <button class="btn btn-primary" onclick="goToScreen3()">Давай попробуем</button>
+        </div>
+    </div>
+
+    <!-- ===== НОВАЯ СТРАНИЦА 5: Отказ ===== -->
+    <div class="screen" id="screen5">
+        <div class="emoji-big">💔</div>
+        <h2 style="font-size: 26px;">Очень жаль,<br>надеюсь, у тебя<br>сложится всё хорошо!</h2>
+        <button class="btn btn-primary btn-large" onclick="goToScreen3()" style="margin-top: 15px;">
+            Давай попробуем
         </button>
     </div>
 
@@ -394,16 +408,16 @@
     const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/ТВОЙ_НОВЫЙ_URL/exec';
 
     // ===== НОВЫЕ ФУНКЦИИ ПЕРЕХОДОВ =====
-    function goToScreen1() {
-        showScreen('screen2');
-    }
-
     function goToScreen2() {
         showScreen('screen2');
     }
 
     function goToScreen3() {
         showScreen('screen3');
+    }
+
+    function goToScreen5() {
+        showScreen('screen5');
     }
 
     // ===== ОТПРАВКА В GOOGLE SHEETS =====
