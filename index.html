@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Приглашение</title>
     <style>
-        /* ===== ВСЕ СТИЛИ ===== */
+        /* ===== ВСЕ СТИЛИ (БЕЗ ИЗМЕНЕНИЙ) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { min-height: 100vh; overflow-x: hidden; }
 
@@ -58,7 +58,7 @@
         .floating-emojis span:nth-child(18) { top: 60%; left: 35%; animation-delay: 2.2s; font-size: 24px; }
         .floating-emojis span:nth-child(19) { top: 80%; left: 30%; animation-delay: 4.8s; font-size: 22px; }
         .floating-emojis span:nth-child(20) { top: 45%; left: 60%; animation-delay: 1.8s; font-size: 20px; }
-      
+
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
             20% { transform: translateY(-28px) rotate(5deg) scale(1.08); }
@@ -226,6 +226,15 @@
         .hidden-btn.danger { color: #c0392b; opacity: 0.7; }
         .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, #dccfc8, transparent); margin: 8px 0; }
 
+        /* Дополнительный стиль для длинного текста на странице с сюрпризом */
+        .text-left {
+            text-align: left;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #3d3530;
+            padding: 0 4px;
+        }
+
         @media (max-width: 420px) {
             .card { padding: 25px 18px 25px; border-radius: 28px; background: rgba(255, 255, 255, 0.78); }
             h1 { font-size: 22px; }
@@ -240,12 +249,14 @@
             .date-picker-card .placeholder { font-size: 16px; }
             .date-picker-card .selected-date { font-size: 16px; }
             .floating-emojis span { font-size: 22px !important; opacity: 0.25; }
+            .text-left { font-size: 15px; }
         }
         @media (max-width: 360px) {
             .card { padding: 20px 12px 20px; background: rgba(255, 255, 255, 0.85); }
             .place-card { min-height: 160px; padding: 16px 12px; }
             .place-card .icon { font-size: 30px; }
             .floating-emojis span { display: none; }
+            .text-left { font-size: 14px; }
         }
     </style>
 </head>
@@ -260,10 +271,43 @@
 
 <div class="card" id="app">
 
-    <!-- ЭКРАН 1 -->
-    <div class="screen active" id="screen1">
+    <!-- ===== НОВАЯ СТРАНИЦА 0: Привет + "не игнорируй" ===== -->
+    <div class="screen active" id="screen0">
+        <div class="emoji-big">👋</div>
+        <h1>Маша, привет,<br>не игнорируй,<br>пожалуйста)</h1>
+        <button class="btn btn-primary btn-large" onclick="goToScreen1()" style="margin-top: 10px;">
+            Окей
+        </button>
+    </div>
+
+    <!-- ===== НОВАЯ СТРАНИЦА 1: Тёплые слова ===== -->
+    <div class="screen" id="screen1">
+        <div style="font-size: 19px; line-height: 1.6; color: #3d3530; padding: 0 4px; margin-top: 10px;">
+            Маша, мы классно с тобой покатались,<br>
+            пообщались,<br>
+            ты классная девушка)
+        </div>
+        <button class="btn btn-primary btn-large" onclick="goToScreen2()" style="margin-top: 10px;">
+            Окей 😊
+        </button>
+    </div>
+
+    <!-- ===== НОВАЯ СТРАНИЦА 2: Первый сюрприз... ===== -->
+    <div class="screen" id="screen2">
+        <h2 style="font-size: 28px;">Первый сюрприз...</h2>
+        <div class="text-left">
+            Маш, если вдруг сюрприз в виде карикатуры как то напряг или даже напугал (надеюсь до этого не дошло) и ты подумала, что я конченый фрик, то поясню.<br><br>
+            План был прост — вызвать эмоцию: удивление, смех, неожиданность (ведь как будто такой презент это небанально)
+        </div>
+        <button class="btn btn-primary btn-large" onclick="goToScreen3()" style="margin-top: 10px;">
+            Далее
+        </button>
+    </div>
+
+    <!-- ===== СТАРАЯ СТРАНИЦА 3 (бывшая 1): Приглашение ===== -->
+    <div class="screen" id="screen3">
         <div class="emoji-big">☀️</div>
-        <h1>Саша, ты пойдёшь <br>со мной на свидание?</h1>
+        <h1>Маша, ты пойдёшь <br>со мной на свидание?</h1>
         <div class="btn-group" style="margin-top: 15px;">
             <button class="btn btn-primary" onclick="goYes()">Да</button>
             <button class="btn btn-outline" onclick="goNo()">Нет</button>
@@ -271,7 +315,7 @@
         <div style="margin-top: 25px; font-size: 14px; color: #b0a098;">* это просто приглашение, без давления :)</div>
     </div>
 
-    <!-- ЭКРАН 1.5 -->
+    <!-- ===== СТАРАЯ СТРАНИЦА 1.5: Переспрос ===== -->
     <div class="screen" id="screen1_5">
         <div class="emoji-big">🤭</div>
         <div class="hashtag">#замечательно</div>
@@ -280,8 +324,8 @@
         <button class="btn btn-outline" style="min-width: 100px; padding: 12px 24px; font-size: 15px;" onclick="goBackFromConfirm()">🔙 Назад</button>
     </div>
 
-    <!-- ЭКРАН 2 -->
-    <div class="screen" id="screen2">
+    <!-- ===== СТАРАЯ СТРАНИЦА 2: Выбор даты ===== -->
+    <div class="screen" id="screen2_old">
         <div class="emoji-big" id="resultEmoji">❤️</div>
         <h2 id="resultTitle">Когда ты свободна?</h2>
         <p class="sub" id="resultSub">Выбери удобное время</p>
@@ -302,15 +346,14 @@
                     <span id="selectedDateDisplay">—</span>
                     <span class="date-text" id="selectedTimeDisplay">—</span>
                 </div>
-                <!-- Убираем onchange и добавляем input для отслеживания -->
                 <input type="datetime-local" id="datePicker" oninput="updateSelectedDate()">
             </div>
             <button class="btn-confirm-date" id="confirmDateBtn" onclick="confirmDate()">Подтвердить ✅</button>
         </div>
     </div>
 
-    <!-- ЭКРАН 3 -->
-    <div class="screen" id="screen3">
+    <!-- ===== СТАРАЯ СТРАНИЦА 3: Выбор места ===== -->
+    <div class="screen" id="screen3_old">
         <h2 style="font-size: 24px;">Куда пойдём?</h2>
         <p class="sub">Выбирай, что тебе в кайф :)</p>
         <div class="carousel-wrapper">
@@ -320,7 +363,7 @@
         <button class="btn-select-place" id="selectPlaceBtn" onclick="confirmPlace()">Сюдаааа! ✨</button>
     </div>
 
-    <!-- ЭКРАН 4 -->
+    <!-- ===== СТАРАЯ СТРАНИЦА 4: Финал ===== -->
     <div class="screen" id="screen4">
         <div class="emoji-big">😌</div>
         <h2>Рад, что ты не отказалась</h2>
@@ -357,7 +400,20 @@
     const STORAGE_KEY = 'inviteHistory';
 
     // ⚠️ ВСТАВЬ СВОЙ URL
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxXmTXikViqUNn8CXNrjs-mIL_zfJvxIG9Xvsu7r_P9Bvzf7AvTNKjQ4g3QrC_d_4jp/exec';
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/ТВОЙ_НОВЫЙ_URL/exec';
+
+    // ===== НОВЫЕ ФУНКЦИИ ПЕРЕХОДОВ =====
+    function goToScreen1() {
+        showScreen('screen1');
+    }
+
+    function goToScreen2() {
+        showScreen('screen2');
+    }
+
+    function goToScreen3() {
+        showScreen('screen3');
+    }
 
     // ===== ОТПРАВКА В GOOGLE SHEETS =====
     function sendToGoogleSheets(data) {
@@ -412,13 +468,14 @@
         document.getElementById(id).classList.add('active');
     }
 
+    // ===== СТАРЫЕ ФУНКЦИИ (без изменений) =====
     function goYes() {
         showScreen('screen1_5');
     }
 
     function goYesFinal() {
         currentAnswers.step1 = 'yes';
-        showScreen('screen2');
+        showScreen('screen2_old');
         document.getElementById('resultEmoji').textContent = '📅';
         document.getElementById('resultTitle').textContent = 'Когда ты свободна?';
         document.getElementById('resultSub').textContent = 'Выбери удобное время';
@@ -429,12 +486,12 @@
     }
 
     function goBackFromConfirm() {
-        showScreen('screen1');
+        showScreen('screen3');
     }
 
     function goNo() {
         currentAnswers.step1 = 'no';
-        showScreen('screen2');
+        showScreen('screen2_old');
         document.getElementById('resultEmoji').textContent = '😔';
         document.getElementById('resultTitle').textContent = '#печалька';
         document.getElementById('resultSub').textContent = '';
@@ -447,18 +504,14 @@
         checkAdmin();
     }
 
-    // ===== ДАТА-ПИКЕР (НОВАЯ ЛОГИКА — БЕЗ АВТОМАТИЧЕСКИХ ОШИБОК) =====
+    // ===== ДАТА-ПИКЕР =====
     function setupDatePicker() {
         const picker = document.getElementById('datePicker');
         const now = new Date();
-        
-        // Минимальная дата — завтра
         const minDate = new Date(now);
         minDate.setDate(minDate.getDate() + 1);
         minDate.setHours(0, 0, 0, 0);
         picker.min = minDate.toISOString().slice(0, 16);
-        
-        // Очищаем значение
         picker.value = '';
         selectedDateValue = null;
         updateDateDisplay();
@@ -471,7 +524,6 @@
         else picker.click();
     }
 
-    // ===== НОВАЯ ФУНКЦИЯ: ТОЛЬКО ПОКАЗЫВАЕМ ВЫБРАННУЮ ДАТУ, БЕЗ ВАЛИДАЦИИ =====
     function updateSelectedDate() {
         const picker = document.getElementById('datePicker');
         const value = picker.value;
@@ -491,7 +543,6 @@
             return;
         }
 
-        // Просто показываем выбранную дату (без проверок!)
         selectedDateValue = value;
         updateDateDisplay();
         updateConfirmBtn();
@@ -527,7 +578,6 @@
         }
     }
 
-    // ===== ВАЛИДАЦИЯ ТОЛЬКО ПРИ НАЖАТИИ "ПОДТВЕРДИТЬ" =====
     function confirmDate() {
         if (!selectedDateValue) {
             alert('Пожалуйста, выбери дату и время 😊');
@@ -541,10 +591,8 @@
         const tomorrow = new Date(today);
         tomorrow.setDate(tomorrow.getDate() + 1);
 
-        // Проверка: дата не раньше завтра
         if (selectedDay < tomorrow) {
             alert('❌ Нельзя выбрать вчерашний или сегодняшний день! Выбери завтра или позже 😊');
-            // Сбрасываем
             document.getElementById('datePicker').value = '';
             selectedDateValue = null;
             updateDateDisplay();
@@ -552,7 +600,6 @@
             return;
         }
 
-        // Проверка времени (будни/выходные)
         const day = dt.getDay();
         const hours = dt.getHours();
         let isValid = false;
@@ -568,7 +615,6 @@
 
         if (!isValid) {
             alert(errorMsg);
-            // Сбрасываем
             document.getElementById('datePicker').value = '';
             selectedDateValue = null;
             updateDateDisplay();
@@ -576,11 +622,11 @@
             return;
         }
 
-        // Всё хорошо — переходим к выбору места
         currentAnswers.date = selectedDateValue;
         goPlace();
     }
 
+    // ===== КАРУСЕЛЬ =====
     function initCarousel() {
         const track = document.getElementById('carouselTrack');
         const dots = document.getElementById('carouselDots');
@@ -690,7 +736,7 @@
     }
 
     function goPlace() {
-        showScreen('screen3');
+        showScreen('screen3_old');
         if (document.getElementById('carouselTrack').children.length === 0) {
             initCarousel();
         } else {
@@ -799,15 +845,16 @@
             finishBtn.style.background = '#a8c4b8';
             finishBtn.style.cursor = 'pointer';
             finishBtn.onclick = finishAndSave;
-            showScreen('screen1');
+            showScreen('screen0');
         }
     }
 
     window.onload = function() {
-        showScreen('screen1');
+        showScreen('screen0');
         checkAdmin();
         updateConfirmBtn();
     };
 </script>
+
 </body>
 </html>
