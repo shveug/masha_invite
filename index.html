@@ -318,7 +318,7 @@
     <!-- ===== СТРАНИЦА 1.5: Переспрос ===== -->
     <div class="screen" id="screen1_5">
         <img src="3.jpg" alt="Реально?" style="width: 180px; height: auto; border-radius: 16px; object-fit: cover; margin-bottom: 6px; box-shadow: 0 4px 16px rgba(180, 120, 100, 0.20); display: block; margin-left: auto; margin-right: auto;">
-        <p style="font-size: 20px; color: #5a4f48; margin: 4px 0 8px; font-weight: 500;">Реально? Игнорить не будешь?)) 😄</p>
+        <p style="font-size: 20px; color: #5a4f48; margin: 4px 0 8px; font-weight: 500;">Реально? Игнорить не будешь?)) 🙄</p>
         <button class="btn btn-primary btn-large" onclick="goYesFinal()">Даааа! 😄</button>
         <button class="btn btn-outline" style="min-width: 100px; padding: 12px 24px; font-size: 15px;" onclick="goBackFromConfirm()">🔙 Назад</button>
     </div>
@@ -599,17 +599,29 @@
             return;
         }
 
-        const day = dt.getDay();
+        const day = dt.getDay(); // 0 = воскресенье, 6 = суббота
         const hours = dt.getHours();
         let isValid = false;
         let errorMsg = '';
 
+        // Будни (пн–пт): строго после 18:00
         if (day >= 1 && day <= 5) {
-            if (hours >= 18) isValid = true;
-            else errorMsg = '⏰ В будни я работаю до 18:00. Выбери время после 18:00 😊';
-        } else if (day === 0 || day === 6) {
-            if (hours >= 16) isValid = true;
-            else errorMsg = '⏰ В выходные ты свободна после 16:00. Выбери время позже 😊';
+            if (hours >= 18) {
+                isValid = true;
+            } else {
+                errorMsg = '⏰ В будни я работаю до 18:00. Выбери время после 18:00 😊';
+            }
+        }
+        // Выходные (сб–вс): с 09:00 до 02:00 ночи (то есть до 02:00 следующего дня)
+        else if (day === 0 || day === 6) {
+            // Разрешаем с 09:00 до 23:59, а также с 00:00 до 02:00 (ночь)
+            if (hours >= 9 && hours <= 23) {
+                isValid = true;
+            } else if (hours >= 0 && hours < 2) {
+                isValid = true;
+            } else {
+                errorMsg = '⏰ В выходные я доступен с 09:00 до 02:00 ночи. Выбери другое время 😊';
+            }
         }
 
         if (!isValid) {
@@ -620,7 +632,6 @@
             updateConfirmBtn();
             return;
         }
-
         currentAnswers.date = selectedDateValue;
         goPlace();
     }
