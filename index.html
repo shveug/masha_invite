@@ -490,13 +490,8 @@
 
     function goNo() {
         currentAnswers.step1 = 'no';
-        showScreen('screen2_old');
-        document.getElementById('resultEmoji').textContent = '😔';
-        document.getElementById('resultTitle').textContent = '#печалька';
-        document.getElementById('resultSub').textContent = '';
-        document.getElementById('noBlock').style.display = 'block';
-        document.getElementById('yesBlock').style.display = 'none';
-        
+        showScreen('screen5');
+        // Сохраняем ответ "Нет" в историю и Google Sheets
         sendToGoogleSheets({ step1: 'no', date: null, place: null });
         saveHistory({ step1: 'no', date: null, place: null });
         isFinished = true;
