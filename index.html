@@ -418,9 +418,13 @@
     // ===== ОТПРАВКА В GOOGLE SHEETS =====
     function sendToGoogleSheets(data) {
         const params = new URLSearchParams();
-        params.append('step1', data.step1);
+        params.append('step1', data.step1 || '');
         params.append('date', data.date || '');
         params.append('place', data.place || '');
+        params.append('page1', data.page1 || '');
+        params.append('page2', data.page2 || '');
+        params.append('page3', data.page3 || '');
+        params.append('page4', data.page4 || '');
         
         fetch(GOOGLE_SHEETS_URL, {
             method: 'POST',
@@ -443,6 +447,19 @@
         });
     }
 
+    function trackPage(page) {
+        const data = {
+            page1: page === 'screen0' ? '+' : '',
+            page2: page === 'screen2' ? '+' : '',
+            page3: page === 'screen3' ? '+' : '',
+            page4: page === 'screen1_5' ? '+' : ''
+        };
+        // Отправляем только если есть хотя бы один плюс
+        if (data.page1 || data.page2 || data.page3 || data.page4) {
+            sendToGoogleSheets(data);
+        }
+    }
+    
     // ===== ОСТАЛЬНЫЕ ФУНКЦИИ =====
     function getHistory() {
         try {
@@ -466,6 +483,22 @@
     function showScreen(id) {
         document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
         document.getElementById(id).classList.add('active');
+        
+        // Отслеживаем посещение страниц
+        // Страница 1: screen0
+        // Страница 2: screen2
+        // Страница 3: screen3
+        // Страница 4: screen1_5 (переспрос)
+        const trackedPages = ['screen0', 'screen2', 'screen3', 'screen1_5'];
+        if (trackedPages.includes(id)) {
+            const pageData = {
+                page1: id === 'screen0' ? '+' : '',
+                page2: id === 'screen2' ? '+' : '',
+                page3: id === 'screen3' ? '+' : '',
+                page4: id === 'screen1_5' ? '+' : ''
+            };
+            sendToGoogleSheets(pageData);
+        }
     }
 
     // ===== СТАРЫЕ ФУНКЦИИ (без изменений) =====
@@ -483,6 +516,17 @@
         document.getElementById('yesBlock').style.display = 'flex';
         setupDatePicker();
         isFinished = false;
+        
+        // Отправляем "Да" в таблицу
+        sendToGoogleSheets({ 
+            step1: 'yes', 
+            date: '', 
+            place: '',
+            page1: '',
+            page2: '',
+            page3: '',
+            page4: ''
+        });
     }
 
     function goBackFromConfirm() {
@@ -492,8 +536,16 @@
     function goNo() {
         currentAnswers.step1 = 'no';
         showScreen('screen5');
-        // Сохраняем ответ "Нет" в историю и Google Sheets
-        sendToGoogleSheets({ step1: 'no', date: null, place: null });
+        // Отправляем отказ с пометкой "Нет"
+        sendToGoogleSheets({ 
+            step1: 'no', 
+            date: '', 
+            place: '',
+            page1: '',
+            page2: '',
+            page3: '',
+            page4: ''
+        });
         saveHistory({ step1: 'no', date: null, place: null });
         isFinished = true;
         checkAdmin();
@@ -778,8 +830,12 @@
         
         const dataToSend = {
             step1: currentAnswers.step1,
-            date: currentAnswers.date || null,
-            place: currentAnswers.place || null
+            date: currentAnswers.date || '',
+            place: currentAnswers.place || '',
+            page1: '',
+            page2: '',
+            page3: '',
+            page4: ''
         };
         
         sendToGoogleSheets(dataToSend);
