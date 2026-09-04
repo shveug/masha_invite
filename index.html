@@ -400,7 +400,7 @@
     const STORAGE_KEY = 'inviteHistory';
 
     // ⚠️ ВСТАВЬ СВОЙ URL
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxe_DPHyacfWHg1ry9aKHfrcXE34feVyKRgGTulta580HeWeXVQDi70xzoDEdQyw50m1A/exec';
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxS2bgm8HQ9fK3oYLGDn_UPuZEhPsadT2zeyHIwKFONdW71GBj6AXwKJvAAitT_Z2f-Rg/exec';
 
     // ===== НОВЫЕ ФУНКЦИИ ПЕРЕХОДОВ =====
     function goToScreen2() {
@@ -418,14 +418,14 @@
     // ===== ОТПРАВКА В GOOGLE SHEETS =====
     function sendToGoogleSheets(data) {
         const params = new URLSearchParams();
-        params.append('step1', data.step1 || '');
-        params.append('date', data.date || '');
-        params.append('place', data.place || '');
-        params.append('page1', data.page1 || '');
-        params.append('page2', data.page2 || '');
-        params.append('page3', data.page3 || '');
-        params.append('page4', data.page4 || '');
-        params.append('final', data.final || '');  // ← НОВЫЙ ПАРАМЕТР
+        params.append('step1', String(data.step1 || ''));
+        params.append('date', String(data.date || ''));
+        params.append('place', String(data.place || ''));
+        params.append('page1', String(data.page1 || ''));
+        params.append('page2', String(data.page2 || ''));
+        params.append('page3', String(data.page3 || ''));
+        params.append('page4', String(data.page4 || ''));
+        params.append('final', String(data.final || ''));
         
         fetch(GOOGLE_SHEETS_URL, {
             method: 'POST',
@@ -445,11 +445,12 @@
 
     function trackPage(page) {
         const data = {
-            page1: page === 'screen0' ? 'Да' : '',
-            page2: page === 'screen2' ? 'Да' : '',
-            page3: page === 'screen3' ? 'Да' : '',
-            page4: page === 'screen1_5' ? 'Да' : ''
+            page1: page === 'screen0' ? '+' : '',
+            page2: page === 'screen2' ? '+' : '',
+            page3: page === 'screen3' ? '+' : '',
+            page4: page === 'screen1_5' ? '+' : ''
         };
+        // Отправляем только если есть хотя бы один плюс
         if (data.page1 || data.page2 || data.page3 || data.page4) {
             sendToGoogleSheets(data);
         }
@@ -531,16 +532,19 @@
     function goNo() {
         currentAnswers.step1 = 'no';
         showScreen('screen5');
-        // Отправляем отказ с пометкой "Нет"
-        sendToGoogleSheets({ 
-            step1: 'no', 
-            date: '', 
+        
+        // Отправляем финальный ответ "Нет"
+        const dataToSend = {
+            step1: 'no',
+            date: '',
             place: '',
             page1: '',
             page2: '',
             page3: '',
-            page4: ''
-        });
+            page4: '',
+            final: '❌ ОТКАЗ'
+        };
+        sendToGoogleSheets(dataToSend);
         saveHistory({ step1: 'no', date: null, place: null });
         isFinished = true;
         checkAdmin();
@@ -831,7 +835,7 @@
             page2: '',
             page3: '',
             page4: '',
-            final: '🎉 ЗАВЕРШЕНО'  // ← НОВЫЙ ПАРАМЕТР
+            final: '🎉 ЗАВЕРШЕНО'
         };
         
         sendToGoogleSheets(dataToSend);
