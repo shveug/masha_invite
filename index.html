@@ -400,7 +400,7 @@
     const STORAGE_KEY = 'inviteHistory';
 
     // ⚠️ ВСТАВЬ СВОЙ URL
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxjK_YR86A_1ZR_UW5AMm5vpSv8fwVoOyYk2-tkKXE6OdUbNWnDw1J0GQmdDCqjQWoiDg/exec';
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbw0FaeR8pq2mAWNvnjENxg1ZRkxKzIblpVyHB5yDKHRtl6UpzL3RI0nlXVz-mU-pJUDyA/exec';
 
     // ===== НОВЫЕ ФУНКЦИИ ПЕРЕХОДОВ =====
     function goToScreen2() {
@@ -418,13 +418,11 @@
     // ===== ОТПРАВКА В GOOGLE SHEETS =====
     function sendToGoogleSheets(data) {
         const params = new URLSearchParams();
+        params.append('event', data.event || '');
         params.append('step1', data.step1 || '');
         params.append('date', data.date || '');
         params.append('place', data.place || '');
-        params.append('page1', data.page1 || '—');
-        params.append('page2', data.page2 || '—');
-        params.append('page3', data.page3 || '—');
-        params.append('page4', data.page4 || '—');
+        params.append('page', data.page || '');
         params.append('final', data.final || '');
         
         fetch(GOOGLE_SHEETS_URL, {
@@ -442,7 +440,16 @@
             console.error('❌ Ошибка отправки:', error);
         });
     }
-
+    function trackPage(page) {
+        sendToGoogleSheets({
+            event: 'Просмотр страницы',
+            page: page,
+            step1: '',
+            date: '',
+            place: '',
+            final: ''
+        });
+    }
     function saveHistory(entry) {
         const history = getHistory();
         history.push({ timestamp: new Date().toISOString(), ...entry });
@@ -461,19 +468,9 @@
         document.getElementById(id).classList.add('active');
         
         // Отслеживаем посещение страниц
-        // Страница 1: screen0
-        // Страница 2: screen2
-        // Страница 3: screen3
-        // Страница 4: screen1_5 (переспрос)
         const trackedPages = ['screen0', 'screen2', 'screen3', 'screen1_5'];
         if (trackedPages.includes(id)) {
-            const pageData = {
-                page1: id === 'screen0' ? '+' : '',
-                page2: id === 'screen2' ? '+' : '',
-                page3: id === 'screen3' ? '+' : '',
-                page4: id === 'screen1_5' ? '+' : ''
-            };
-            sendToGoogleSheets(pageData);
+            trackPage(id);
         }
     }
 
@@ -513,17 +510,14 @@
         currentAnswers.step1 = 'no';
         showScreen('screen5');
         
-        const dataToSend = {
+        sendToGoogleSheets({
+            event: 'Отказ',
             step1: 'no',
             date: '',
             place: '',
-            page1: '—',
-            page2: '—',
-            page3: '—',
-            page4: '—',
+            page: 'screen5',
             final: '❌ ОТКАЗ'
-        };
-        sendToGoogleSheets(dataToSend);
+        });
         saveHistory({ step1: 'no', date: null, place: null });
         isFinished = true;
         checkAdmin();
@@ -805,6 +799,35 @@
             alert('Что-то пошло не так. Попробуй ещё раз 😊');
             return;
         }
+        
+        // Отправляем финальные данные
+        const dataToSend = {
+            event: 'Завершение опроса',
+            step1: currentAnswers.step1,
+            date: currentAnswers.date || '',
+            place: currentAnswers.place || '',
+            page: 'final',
+            final: '🎉 ЗАВЕРШЕНО'
+        };
+        
+        sendToGoogleSheets(dataToSend);
+        saveHistory({
+            step1: currentAnswers.step1,
+            date: currentAnswers.date,
+            place: currentAnswers.place
+        });
+        
+        isFinished = true;
+        
+        // Окошко обязательно появится!
+        alert('🎉 Готово! Твой выбор сохранён. Я напишу тебе ближе к дате. Договорились? 😊');
+        
+        const finishBtn = document.querySelector('.btn-success');
+        finishBtn.textContent = '✅ Уже завершено';
+        finishBtn.style.background = '#d4c9c4';
+        finishBtn.style.cursor = 'default';
+        finishBtn.onclick = null;
+    }
         
         const dataToSend = {
             step1: currentAnswers.step1,
