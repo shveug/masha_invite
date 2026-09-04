@@ -233,6 +233,10 @@
             color: #3d3530;
             padding: 0 4px;
         }
+        .text-justify {
+            text-align: justify;
+            width: 100%;
+        }
 
         @media (max-width: 420px) {
             .card { padding: 25px 18px 25px; border-radius: 28px; background: rgba(255, 255, 255, 0.78); }
@@ -270,56 +274,56 @@
 
 <div class="card" id="app">
 
-    <!-- ===== ОБЪЕДИНЁННАЯ СТРАНИЦА 0: Привет + тёплые слова ===== -->
+    <!-- ===== СТРАНИЦА 0: Привет ===== -->
     <div class="screen active" id="screen0">
-        <img src="1.jpg" alt="Привет" style="width: 260px; height: 155px; border-radius: 12px; object-fit: cover; margin-bottom: 10px; box-shadow: 0 4px 16px rgba(180, 120, 100, 0.25); display: block; margin-left: auto; margin-right: auto;">
-        <h1>Маша, привет, хватит игнорить))</h1>
+        <img src="1.jpg" alt="Маша, привет!" style="width: 155px; height: 155px; border-radius: 12px; object-fit: cover; margin-bottom: 10px; box-shadow: 0 4px 16px rgba(180, 120, 100, 0.25); display: block; margin-left: auto; margin-right: auto;">
+        <h1>Маша, привет, не игнорируй,<br>пожалуйста)</h1>
         <div style="font-size: 18px; line-height: 1.6; color: #3d3530; padding: 0 4px; margin-top: 4px;">
-            Мне показалось, что мы круто с тобой покатались, пообщались. Ты классная девушка и мне было очень вайбово
+            Мне показалось, что мы круто с тобой покатались, пообщались. Ты классная девушка и мне было очень вайбово)
         </div>
         <button class="btn btn-primary btn-large" onclick="goToScreen2()" style="margin-top: 10px;">
             Окей
         </button>
     </div>
 
-    <!-- ===== НОВАЯ СТРАНИЦА 2: Первый сюрприз... ===== -->
+    <!-- ===== СТРАНИЦА 2: Первый сюрприз... ===== -->
     <div class="screen" id="screen2">
         <h2 style="font-size: 28px;">Первый сюрприз...</h2>
-        <div class="text-left" style="text-align: justify; width: 100%;">
+        <div class="text-left text-justify">
             Маша, если вдруг сюрприз в виде карикатуры как то напряг или даже напугал (надеюсь до этого не дошло) и ты подумала, что я конченый фрик, то поясню.<br><br>
-            План был прост — вызвать эмоцию: удивление, смех, неожиданность (ведь как будто такой презент — это небанально).<br><br>
-            Никакого подтекста в этой картинке нет, просто забавный сюрприз.<br>
+            План был прост — вызвать эмоцию: удивление, смех, неожиданность (ведь как будто такой презент - это небанально)
         </div>
         <button class="btn btn-primary btn-large" onclick="goToScreen3()" style="margin-top: 10px;">
             Что дальше?
         </button>
     </div>
 
-    <!-- ===== НОВАЯ СТРАНИЦА 5: Отказ ===== -->
-    <div class="screen" id="screen5">
-        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; width: 100%;">
-            <div class="emoji-big" style="font-size: 72px;">💔</div>
-            <h2 style="font-size: 26px; text-align: center; line-height: 1.4;">Очень жаль,<br>надеюсь, у тебя<br>сложится всё хорошо!</h2>
-        </div>
-    </div>
-
     <!-- ===== СТРАНИЦА 3: Приглашение ===== -->
     <div class="screen" id="screen3">
+        <div class="emoji-big">🌹</div>
         <h1 style="font-size: 24px; line-height: 1.4;">Давай продолжим общение?<br>Ты пойдёшь на свидание?</h1>
         <img src="2.jpg" alt="Приглашение" style="width: 200px; height: auto; border-radius: 16px; object-fit: cover; margin: 6px 0 10px 0; box-shadow: 0 4px 16px rgba(180, 120, 100, 0.20); display: block; margin-left: auto; margin-right: auto;">
         <div class="btn-group" style="margin-top: 5px;">
             <button class="btn btn-primary" onclick="goYes()">Да</button>
             <button class="btn btn-outline" onclick="goNo()">Нет</button>
         </div>
-        <div style="margin-top: 18px; font-size: 14px; color: #b0a098;">*В этот раз без дибильных подарков)))</div>
+        <div style="margin-top: 18px; font-size: 14px; color: #b0a098;">В этот раз без дибильных подарков)))</div>
     </div>
 
     <!-- ===== СТРАНИЦА 1.5: Переспрос ===== -->
     <div class="screen" id="screen1_5">
         <img src="3.jpg" alt="Реально?" style="width: 180px; height: auto; border-radius: 16px; object-fit: cover; margin-bottom: 6px; box-shadow: 0 4px 16px rgba(180, 120, 100, 0.20); display: block; margin-left: auto; margin-right: auto;">
-        <p style="font-size: 20px; color: #5a4f48; margin: 4px 0 8px; font-weight: 500;">Реально? Игнорить не будешь?)) 🙄</p>
+        <p style="font-size: 20px; color: #5a4f48; margin: 4px 0 8px; font-weight: 500;">Реально? Игнорить не будешь?)) 😄</p>
         <button class="btn btn-primary btn-large" onclick="goYesFinal()">Даааа! 😄</button>
         <button class="btn btn-outline" style="min-width: 100px; padding: 12px 24px; font-size: 15px;" onclick="goBackFromConfirm()">🔙 Назад</button>
+    </div>
+
+    <!-- ===== СТРАНИЦА 5: Отказ ===== -->
+    <div class="screen" id="screen5">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; width: 100%;">
+            <div class="emoji-big" style="font-size: 72px;">💔</div>
+            <h2 style="font-size: 26px; text-align: center; line-height: 1.4;">Очень жаль,<br>надеюсь, у тебя<br>сложится всё хорошо!</h2>
+        </div>
     </div>
 
     <!-- ===== СТАРАЯ СТРАНИЦА 2: Выбор даты ===== -->
@@ -361,7 +365,7 @@
         <button class="btn-select-place" id="selectPlaceBtn" onclick="confirmPlace()">Сюдаааа! ✨</button>
     </div>
 
-    <!-- ===== СТАРАЯ СТРАНИЦА 4: Финал ===== -->
+    <!-- ===== ФИНАЛ ===== -->
     <div class="screen" id="screen4">
         <div class="emoji-big">😌</div>
         <h2>Рад, что ты не отказалась</h2>
@@ -399,21 +403,8 @@
     let isFinished = false;
     const STORAGE_KEY = 'inviteHistory';
 
-    // ⚠️ ВСТАВЬ СВОЙ URL
+    // ⚠️ ТОЛЬКО ЭТУ СТРОКУ МЕНЯЙ НА СВОЙ URL
     const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbw0FaeR8pq2mAWNvnjENxg1ZRkxKzIblpVyHB5yDKHRtl6UpzL3RI0nlXVz-mU-pJUDyA/exec';
-
-    // ===== НОВЫЕ ФУНКЦИИ ПЕРЕХОДОВ =====
-    function goToScreen2() {
-        showScreen('screen2');
-    }
-
-    function goToScreen3() {
-        showScreen('screen3');
-    }
-
-    function goToScreen5() {
-        showScreen('screen5');
-    }
 
     // ===== ОТПРАВКА В GOOGLE SHEETS =====
     function sendToGoogleSheets(data) {
@@ -440,6 +431,8 @@
             console.error('❌ Ошибка отправки:', error);
         });
     }
+
+    // ===== ТРЕКИНГ СТРАНИЦ =====
     function trackPage(page) {
         sendToGoogleSheets({
             event: 'Просмотр страницы',
@@ -450,31 +443,31 @@
             final: ''
         });
     }
-    function saveHistory(entry) {
-        const history = getHistory();
-        history.push({ timestamp: new Date().toISOString(), ...entry });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-    }
 
-    function clearHistory() {
-        if (confirm('🗑️ Точно очистить всю историю ответов?')) {
-            localStorage.removeItem(STORAGE_KEY);
-            alert('✅ История очищена');
-        }
-    }
-
+    // ===== ПОКАЗАТЬ ЭКРАН =====
     function showScreen(id) {
         document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         
-        // Отслеживаем посещение страниц
         const trackedPages = ['screen0', 'screen2', 'screen3', 'screen1_5'];
         if (trackedPages.includes(id)) {
             trackPage(id);
         }
     }
 
-    // ===== СТАРЫЕ ФУНКЦИИ (без изменений) =====
+    // ===== ФУНКЦИИ ПЕРЕХОДОВ =====
+    function goToScreen2() {
+        showScreen('screen2');
+    }
+
+    function goToScreen3() {
+        showScreen('screen3');
+    }
+
+    function goToScreen5() {
+        showScreen('screen5');
+    }
+
     function goYes() {
         showScreen('screen1_5');
     }
@@ -490,15 +483,13 @@
         setupDatePicker();
         isFinished = false;
         
-        // Отправляем "Да" в таблицу
-        sendToGoogleSheets({ 
-            step1: 'yes', 
-            date: '', 
+        sendToGoogleSheets({
+            event: 'Согласие',
+            step1: 'yes',
+            date: '',
             place: '',
-            page1: '',
-            page2: '',
-            page3: '',
-            page4: ''
+            page: 'screen2_old',
+            final: ''
         });
     }
 
@@ -521,6 +512,26 @@
         saveHistory({ step1: 'no', date: null, place: null });
         isFinished = true;
         checkAdmin();
+    }
+
+    // ===== ОСТАЛЬНЫЕ ФУНКЦИИ =====
+    function getHistory() {
+        try {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        } catch { return []; }
+    }
+
+    function saveHistory(entry) {
+        const history = getHistory();
+        history.push({ timestamp: new Date().toISOString(), ...entry });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+    }
+
+    function clearHistory() {
+        if (confirm('🗑️ Точно очистить всю историю ответов?')) {
+            localStorage.removeItem(STORAGE_KEY);
+            alert('✅ История очищена');
+        }
     }
 
     // ===== ДАТА-ПИКЕР =====
@@ -619,7 +630,7 @@
             return;
         }
 
-        const day = dt.getDay(); // 0 = воскресенье, 6 = суббота
+        const day = dt.getDay();
         const hours = dt.getHours();
         let isValid = false;
         let errorMsg = '';
@@ -632,9 +643,8 @@
                 errorMsg = '⏰ В будни я работаю до 18:00. Выбери время после 18:00 😊';
             }
         }
-        // Выходные (сб–вс): с 09:00 до 02:00 ночи (то есть до 02:00 следующего дня)
+        // Выходные (сб–вс): с 09:00 до 02:00 ночи
         else if (day === 0 || day === 6) {
-            // Разрешаем с 09:00 до 23:59, а также с 00:00 до 02:00 (ночь)
             if (hours >= 9 && hours <= 23) {
                 isValid = true;
             } else if (hours >= 0 && hours < 2) {
@@ -652,7 +662,19 @@
             updateConfirmBtn();
             return;
         }
+
         currentAnswers.date = selectedDateValue;
+        
+        // Отправляем дату в таблицу
+        sendToGoogleSheets({
+            event: 'Выбор даты',
+            step1: '',
+            date: selectedDateValue,
+            place: '',
+            page: 'screen2_old',
+            final: ''
+        });
+        
         goPlace();
     }
 
@@ -762,6 +784,17 @@
             return;
         }
         currentAnswers.place = selectedPlace.name;
+        
+        // Отправляем место в таблицу
+        sendToGoogleSheets({
+            event: 'Выбор места',
+            step1: '',
+            date: '',
+            place: selectedPlace.name,
+            page: 'screen3_old',
+            final: ''
+        });
+        
         goFinal();
     }
 
@@ -789,6 +822,7 @@
         checkAdmin();
     }
 
+    // ===== ФИНАЛЬНОЕ СОХРАНЕНИЕ =====
     function finishAndSave() {
         if (isFinished) {
             alert('Ты уже завершила опрос 😊');
@@ -819,36 +853,6 @@
         
         isFinished = true;
         
-        // Окошко обязательно появится!
-        alert('🎉 Готово! Твой выбор сохранён. Я напишу тебе ближе к дате. Договорились? 😊');
-        
-        const finishBtn = document.querySelector('.btn-success');
-        finishBtn.textContent = '✅ Уже завершено';
-        finishBtn.style.background = '#d4c9c4';
-        finishBtn.style.cursor = 'default';
-        finishBtn.onclick = null;
-    }
-        
-        const dataToSend = {
-            step1: currentAnswers.step1,
-            date: currentAnswers.date || '',
-            place: currentAnswers.place || '',
-            page1: '—',
-            page2: '—',
-            page3: '—',
-            page4: '—',
-            final: '🎉 ЗАВЕРШЕНО'
-        };
-        
-        sendToGoogleSheets(dataToSend);
-        saveHistory({
-            step1: currentAnswers.step1,
-            date: currentAnswers.date,
-            place: currentAnswers.place
-        });
-        
-        isFinished = true;
-        
         alert('🎉 Готово! Твой выбор сохранён. Я напишу тебе ближе к дате. Договорились? 😊');
         
         const finishBtn = document.querySelector('.btn-success');
@@ -858,6 +862,7 @@
         finishBtn.onclick = null;
     }
 
+    // ===== АДМИН-ПАНЕЛЬ =====
     function checkAdmin() {
         if (window.location.search.includes('admin')) {
             document.getElementById('adminBtn').style.display = 'block';
