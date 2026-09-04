@@ -377,7 +377,7 @@
         <div class="divider"></div>
         <button class="hidden-btn" id="adminBtn" onclick="showHistory()" style="display:none;">📊 Показать историю</button>
         <button class="hidden-btn danger" id="clearBtn" onclick="clearHistory()" style="display:none;">🗑️ Очистить историю</button>
-        <button class="btn btn-outline" style="margin-top:4px; padding: 10px 20px; font-size: 14px; min-width: 80px;" onclick="resetAll()">↺ Начать сначала</button>
+        <!-- Кнопка "Начать сначала" УДАЛЕНА -->
     </div>
 
 </div>
@@ -404,7 +404,7 @@
     const STORAGE_KEY = 'inviteHistory';
 
     // ⚠️ ТОЛЬКО ЭТУ СТРОКУ МЕНЯЙ НА СВОЙ URL
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbw0FaeR8pq2mAWNvnjENxg1ZRkxKzIblpVyHB5yDKHRtl6UpzL3RI0nlXVz-mU-pJUDyA/exec';
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwZl5ZlPvA0Z6vHzP9Xr37Ph2UtX2utCGn3Qn-1o4jnCMK6m8_Uuz_1cKLRABIHWxaYvw/exec';
 
     // ===== ОТПРАВКА В GOOGLE SHEETS =====
     function sendToGoogleSheets(data) {
