@@ -457,7 +457,8 @@
         document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         
-        const trackedPages = ['screen0', 'screen2', 'screen3', 'screen1_5'];
+        // Отслеживаем ТОЛЬКО страницы, начиная со второй (screen2)
+        const trackedPages = ['screen2', 'screen3', 'screen1_5'];
         if (trackedPages.includes(id)) {
             trackPage(id);
         }
